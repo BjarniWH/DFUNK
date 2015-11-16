@@ -106,9 +106,9 @@ namespace DFUNK.Models
                 .Property(e => e.address)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Events>()
-                .Property(e => e.endDate)
-                .IsFixedLength();
+            //modelBuilder.Entity<Events>()
+            //    .Property(e => e.endDate)
+            //    .IsFixedLength();
 
             modelBuilder.Entity<Events>()
                 .HasMany(e => e.Contact1)
