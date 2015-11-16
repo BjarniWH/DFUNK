@@ -1,0 +1,16 @@
+﻿@using (Html.BeginForm("Index", "Contacts", FormMethod.Post))
+{
+    @Html.DisplayName("Companies:")
+    @Html.DropDownList("MembersOrCompanies", new SelectList(
+        new List<Object>{
+                       new { value = 1 , text = "Members"  },
+                       new { value = 2 , text = "Companies" }
+        },
+        "value",
+        "text",
+        0))
+
+    <div class="col-md-offset-2 col-md-10">
+        <input type = "submit" class="btn btn-default" value="Show" />
+    </div>
+}

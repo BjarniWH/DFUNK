@@ -17,7 +17,30 @@ namespace DFUNK.Controllers
         // GET: Contacts
         public ActionResult Index()
         {
-            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo);
+            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
+            return View(contact.ToList());
+        }
+
+        //[HttpPost]
+        //public ActionResult Index(bool Companies, bool Members, bool Stakeholders, bool Volunteers, bool InternalEmployees)
+        //{
+        //    db = new Models.DFUNK();
+        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == Companies && x.member == Members && x.stakeholder == Stakeholders
+        //    && x.volunteer == Volunteers && x.internalEmployee == InternalEmployees);
+            
+        //    return View(contact.ToList());
+        //}
+
+        [HttpPost]
+        public ActionResult Index(int MembersOrCompanies)
+        {
+            db = new Models.DFUNK();
+
+            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
+
+            if (MembersOrCompanies == 2)
+                contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == true);
+
             return View(contact.ToList());
         }
 

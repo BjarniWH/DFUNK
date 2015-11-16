@@ -1,0 +1,21 @@
+﻿@using (Html.BeginForm("Index", "Contacts", FormMethod.Post))
+{
+    @Html.DisplayName("Companies:")
+    @Html.CheckBox("Companies", true)
+
+    @Html.DisplayName("    Members:")
+    @Html.CheckBox("Members", true)
+
+    @Html.DisplayName("   Stakeholders:")
+    @Html.CheckBox("Stakeholders", true)
+
+    @Html.DisplayName("   Volunteers:")
+    @Html.CheckBox("Volunteers", true)
+
+    @Html.DisplayName("   Internal Employees:")
+    @Html.CheckBox("InternalEmployees", true)
+
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" class="btn btn-default" value="Submit Topic" />
+    </div>
+}
