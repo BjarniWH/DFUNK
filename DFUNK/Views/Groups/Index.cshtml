@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DFUNK.Models.Group>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Leader")
+            @*@Html.DisplayNameFor(model => model.Contact.name)*@
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.region)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact.name)
+            @Html.DisplayFor(modelItem => item.Contact.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.region)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.group_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.group_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.group_id })
+        </td>
+    </tr>
+}
+
+</table>

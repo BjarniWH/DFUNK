@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DFUNK.Models.Payments>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Contact.name)
+        </th>
+        <th>
+            @Html.DisplayName("Payment Method")
+            @*@Html.DisplayNameFor(model => model.PaymentMethod.name)*@
+        </th>
+        <th>
+            @Html.DisplayName("Project")
+            @*@Html.DisplayNameFor(model => model.Projects.name)*@
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact.name)
+            @Html.DisplayFor(modelItem => item.Contact.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentMethod.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Projects.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.payment_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.payment_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.payment_id })
+        </td>
+    </tr>
+}
+</table>

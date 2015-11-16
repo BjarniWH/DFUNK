@@ -1,0 +1,58 @@
+﻿@model DFUNK.Models.CompanyInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CompanyInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contactPerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contactPerson)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.role)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.role)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.contact_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

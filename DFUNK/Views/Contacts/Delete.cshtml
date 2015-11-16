@@ -1,0 +1,152 @@
+﻿@model DFUNK.Models.Contact
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyInfo.contactPerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyInfo.contactPerson)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VolunteerInfo.tshirtSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VolunteerInfo.tshirtSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.street)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.street)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.zipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.zipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phoneNr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phoneNr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.company)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.registerDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.registerDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.member)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.member)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stakeholder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stakeholder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.volunteer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.volunteer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.internalEmployee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.internalEmployee)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

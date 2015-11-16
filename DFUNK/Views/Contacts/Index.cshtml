@@ -1,0 +1,126 @@
+﻿@model IEnumerable<DFUNK.Models.Contact>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@*@Html.BeginForm("Sorting", "Contacts")
+@Html.RadioButtonFor()
+@Html.EndForm*@
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.CompanyInfo.contactPerson)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VolunteerInfo.tshirtSize)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.zipCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phoneNr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.company)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.registerDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.member)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stakeholder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.volunteer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.internalEmployee)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.CompanyInfo.contactPerson)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VolunteerInfo.tshirtSize)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateOfBirth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.street)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.zipCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phoneNr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.company)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.registerDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.member)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stakeholder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.volunteer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.internalEmployee)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.contact_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.contact_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.contact_id })
+        </td>
+    </tr>
+}
+
+</table>
