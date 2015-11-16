@@ -36,8 +36,6 @@ namespace DFUNK.Models
         [StringLength(10)]
         public string endDate { get; set; }
 
-        public TimeSpan? startTime { get; set; }
-
         public virtual Contact Contact { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

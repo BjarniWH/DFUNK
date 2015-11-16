@@ -48,7 +48,7 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "event_id,name,minPeople,maxPeople,address,leader,startDate,endDate,startTime")] Events events)
+        public ActionResult Create([Bind(Include = "event_id,name,minPeople,maxPeople,address,leader,startDate,endDate")] Events events)
         {
             if (ModelState.IsValid)
             {

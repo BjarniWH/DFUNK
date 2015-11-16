@@ -72,10 +72,11 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,registerDate,member,stakeholder,volunteer,internalEmployee")] Contact contact)
+        public ActionResult Create([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,member,stakeholder,volunteer,internalEmployee")] Contact contact)
         {
             if (ModelState.IsValid)
             {
+                contact.registerDate = DateTime.Now;
                 db.Contact.Add(contact);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -61,6 +61,7 @@ namespace DFUNK.Controllers
         {
             if (ModelState.IsValid)
             {
+                payments.date = DateTime.Now;
                 db.Payments.Add(payments);
                 db.SaveChanges();
                 return RedirectToAction("Index");
