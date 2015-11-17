@@ -13,6 +13,7 @@ namespace DFUNK.Controllers
     public class ContactsController : Controller
     {
         private Models.DFUNK db = new Models.DFUNK();
+        
 
         // GET: Contacts
         public ActionResult Index()
@@ -27,9 +28,27 @@ namespace DFUNK.Controllers
         //    db = new Models.DFUNK();
         //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == Companies && x.member == Members && x.stakeholder == Stakeholders
         //    && x.volunteer == Volunteers && x.internalEmployee == InternalEmployees);
-            
+
         //    return View(contact.ToList());
         //}
+
+        [HttpPost]
+        public ActionResult RemoveFromGroup(int Group1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Group1.Remove(db.Group.Find(Group1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        [HttpPost]
+        public ActionResult AddToGroup(int Group1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Group1.Add(db.Group.Find(Group1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
 
         [HttpPost]
         public ActionResult Index(int MembersOrCompanies)
@@ -56,6 +75,7 @@ namespace DFUNK.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(contact);
         }
 
