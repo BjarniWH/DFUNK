@@ -31,6 +31,7 @@ namespace DFUNK.Models
         public string surname { get; set; }
 
         [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
         public DateTime? dateOfBirth { get; set; }
 
         [Required]

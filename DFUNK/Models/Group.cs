@@ -37,5 +37,7 @@ namespace DFUNK.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projects> Projects { get; set; }
+
+        public string fullName { get { return name + ", " + city + ", " + region; } }
     }
 }
