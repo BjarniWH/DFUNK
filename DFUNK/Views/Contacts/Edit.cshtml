@@ -95,10 +95,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CompanyInfo.contactPerson, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <div class="checkbox">
                         @Html.EditorFor(model => model.CompanyInfo.contactPerson, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.CompanyInfo.contactPerson, "", new { @class = "text-danger" })
-                    </div>
                 </div>
             </div>
 
@@ -170,10 +168,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.VolunteerInfo.tshirtSize, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <div class="checkbox">
                         @Html.EditorFor(model => model.VolunteerInfo.tshirtSize)
                         @Html.ValidationMessageFor(model => model.VolunteerInfo.tshirtSize, "", new { @class = "text-danger" })
-                    </div>
                 </div>
             </div>
 
@@ -181,7 +177,7 @@
                 @Html.LabelFor(model => model.VolunteerInfo.vegetarian, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
-                        @Html.EditorFor(model => model.VolunteerInfo.vegetarian)
+                        @Html.EditorFor(model => model.VolunteerInfo.vegetarian, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.VolunteerInfo.vegetarian, "", new { @class = "text-danger" })
                     </div>
                 </div>
