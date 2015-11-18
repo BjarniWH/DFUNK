@@ -32,6 +32,7 @@ namespace DFUNK.Models
 
         [Column(TypeName = "date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? dateOfBirth { get; set; }
 
         [Required]

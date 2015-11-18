@@ -16,10 +16,10 @@ namespace DFUNK.Models
         [StringLength(10)]
         public string tshirtSize { get; set; }
 
-        public bool? vegetariagn { get; set; }
+        public bool? vegetarian { get; set; }
 
         [StringLength(10)]
-        public string drivingLicence { get; set; }
+        public string drivingLicense { get; set; }
 
         public virtual Contact Contact { get; set; }
     }

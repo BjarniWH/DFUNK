@@ -21,14 +21,31 @@
                     @Html.DisplayFor(model => model.CompanyInfo.contactPerson)
                 </dd>
             }
-        }  
-        <dt>
-            @Html.DisplayNameFor(model => model.VolunteerInfo.tshirtSize)
-        </dt>
+            else if(Model.volunteer)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.VolunteerInfo.tshirtSize)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.VolunteerInfo.tshirtSize)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.VolunteerInfo.tshirtSize)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.VolunteerInfo.vegetarian)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.VolunteerInfo.vegetarian)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.VolunteerInfo.drivingLicense)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.VolunteerInfo.drivingLicense)
+                </dd>
+            }
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.name)
@@ -141,54 +158,58 @@
         <dd>
             @Html.DisplayFor(model => model.internalEmployee)
         </dd>
-        <dt>
-            @Html.DisplayName("Remove from Group")
-        </dt>
-        <dd>
-            @using (Html.BeginForm("RemoveFromGroup", "Contacts", FormMethod.Post))
+        </dl>
+
+        <h2>Groups</h2>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("Remove from Group")
+            </dt>
+            <dd>
+                @using (Html.BeginForm("RemoveFromGroup", "Contacts", FormMethod.Post))
             {
-                @*@Html.DisplayName("Companies:")
-                    @Html.DropDownList("MembersOrCompanies", new SelectList(
-            new List<Object>{
-                           new { value = 1 , text = "Members"  },
-                           new { value = 2 , text = "Companies" }
-            },
-            "value",
-            "text",
-            0))*@
-                @Html.DropDownListFor(model => model.Group1, new SelectList(Model.Group1.ToList(), "group_id", "fullName"))
-                @Html.HiddenFor(model => model.contact_id, new { id = Model.contact_id })
-                
-                <input type="submit" class="btn btn-default" value="Remove" />
-            }
-        </dd>
-        <dt>
-            @Html.DisplayName("Add to Group")
-        </dt>
-        <dd>
-            @using (Html.BeginForm("AddToGroup", "Contacts", FormMethod.Post))
+                    @*@Html.DisplayName("Companies:")
+                            @Html.DropDownList("MembersOrCompanies", new SelectList(
+                    new List<Object>{
+                                   new { value = 1 , text = "Members"  },
+                                   new { value = 2 , text = "Companies" }
+                    },
+                    "value",
+                    "text",
+                    0))*@
+                    @Html.DropDownListFor(model => model.Group1, new SelectList(Model.Group1.ToList(), "group_id", "fullName"))
+                    @Html.HiddenFor(model => model.contact_id, new { id = Model.contact_id })
+
+                    <input type="submit" class="btn btn-default" value="Remove" />
+                }
+            </dd>
+            <dt>
+                @Html.DisplayName("Add to Group")
+            </dt>
+            <dd>
+                @using (Html.BeginForm("AddToGroup", "Contacts", FormMethod.Post))
             {
-                @*@Html.DisplayName("Companies:")
-                        @Html.DropDownList("MembersOrCompanies", new SelectList(
-                new List<Object>{
-                               new { value = 1 , text = "Members"  },
-                               new { value = 2 , text = "Companies" }
-                },
-                "value",
-                "text",
-                0))*@
-            DFUNK.Models.DFUNK db = new DFUNK.Models.DFUNK();
-            @Html.DropDownListFor(model => model.Group1, new SelectList(db.Group.ToList().Where(p => !Model.Group1.ToList().Any(p2 => p2.group_id == p.group_id)), "group_id", "fullName"))
-                //@Html.DropDownListFor(model => model.Group1, new SelectList(Model.Group1.ToList(), "group_id", "fullName"))
-                @Html.HiddenFor(model => model.contact_id, new { id = Model.contact_id })
+                    @*@Html.DisplayName("Companies:")
+                            @Html.DropDownList("MembersOrCompanies", new SelectList(
+                    new List<Object>{
+                                   new { value = 1 , text = "Members"  },
+                                   new { value = 2 , text = "Companies" }
+                    },
+                    "value",
+                    "text",
+                    0))*@
+                DFUNK.Models.DFUNK db = new DFUNK.Models.DFUNK();
+                @Html.DropDownListFor(model => model.Group1, new SelectList(db.Group.ToList().Where(p => !Model.Group1.ToList().Any(p2 => p2.group_id == p.group_id)), "group_id", "fullName"))
+                    //@Html.DropDownListFor(model => model.Group1, new SelectList(Model.Group1.ToList(), "group_id", "fullName"))
+                    @Html.HiddenFor(model => model.contact_id, new { id = Model.contact_id })
 
-                <input type="submit" class="btn btn-default" value="Add" />
-            }
-        </dd>
+                    <input type="submit" class="btn btn-default" value="Add" />
+                }
+            </dd>
 
 
 
-    </dl>
+        </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.contact_id }) |

@@ -183,7 +183,7 @@ namespace DFUNK.Models
                 .IsFixedLength();
 
             modelBuilder.Entity<VolunteerInfo>()
-                .Property(e => e.drivingLicence)
+                .Property(e => e.drivingLicense)
                 .IsFixedLength();
         }
     }
