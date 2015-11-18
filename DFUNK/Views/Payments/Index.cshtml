@@ -9,6 +9,14 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@{
+    if (ViewBag.ShowAll)
+    {
+        <p>
+            @Html.ActionLink("Show All", "Index")
+        </p>
+    }
+}
 <p>
     @ViewBag.totalAmount
 </p>
@@ -37,8 +45,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Contact.name)
-            @Html.DisplayFor(modelItem => item.Contact.surname)
+            <a href="@Url.Action("Index", "Payments", new { contact_id = item.contact_id })">
+                <span class="donor">
+                @Html.DisplayFor(modelItem => item.Contact.name)
+                @Html.DisplayFor(modelItem => item.Contact.surname)</span>
+            </a>
+            @*@Html.DisplayFor(modelItem => item.Contact.name)
+            @Html.DisplayFor(modelItem => item.Contact.surname)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentMethod.name)

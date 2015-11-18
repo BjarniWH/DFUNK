@@ -1,16 +1,27 @@
-﻿@model IEnumerable<DFUNK.Models.Contact>
+﻿@*@model IEnumerable<DFUNK.Models.Contact>*@
+@model PagedList.IPagedList<DFUNK.Models.Contact>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Contacts";
 }
 
-<h2>Index</h2>
+<h2>Contacts</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@Html.Partial("_CompanyOrMembers")
+@*@Html.Partial("_CompanyOrMembers")*@
+
+@using (Html.BeginForm("Index", "Contacts", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 
 <table class="table">
     <tr>
@@ -21,46 +32,60 @@
             @Html.DisplayNameFor(model => model.VolunteerInfo.tshirtSize)
         </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @*@Html.DisplayNameFor(model => model.name)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.surname)
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNAmeSortParm, currentFilter = ViewBag.CurrentFilter })
+            @*@Html.DisplayNameFor(model => model.surname)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateOfBirth)
+            @Html.DisplayName("Date of Birth")
+            @*@Html.DisplayNameFor(model => model.dateOfBirth)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.street)
+            @Html.DisplayName("Street")
+            @*@Html.DisplayNameFor(model => model.street)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.zipCode)
+            @Html.DisplayName("Zip Code")
+            @*@Html.DisplayNameFor(model => model.zipCode)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.city)
+            @Html.DisplayName("City")
+            @*@Html.DisplayNameFor(model => model.city)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.phoneNr)
+            @Html.DisplayName("Phone Number")
+            @*@Html.DisplayNameFor(model => model.phoneNr)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayName("Email")
+            @*@Html.DisplayNameFor(model => model.email)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.company)
+            @Html.DisplayName("Company")
+            @*@Html.DisplayNameFor(model => model.company)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.registerDate)
+            @Html.DisplayName("Date of Registry")
+            @*@Html.DisplayNameFor(model => model.registerDate)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.member)
+            @Html.DisplayName("Member")
+            @*@Html.DisplayNameFor(model => model.member)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.stakeholder)
+            @Html.DisplayName("Stakeholder")
+            @*@Html.DisplayNameFor(model => model.stakeholder)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.volunteer)
+            @Html.DisplayName("Volunteer")
+            @*@Html.DisplayNameFor(model => model.volunteer)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.internalEmployee)
+            @Html.DisplayName("Internal Employee")
+            @*@Html.DisplayNameFor(model => model.internalEmployee)*@
         </th>
         <th></th>
     </tr>
@@ -124,3 +149,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

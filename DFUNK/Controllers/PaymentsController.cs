@@ -40,8 +40,11 @@ namespace DFUNK.Controllers
                 {
                     total = total + (decimal)payment.amount;
                     ViewBag.TotalAmount = "Total amount paid: " + total.ToString("F");
+                    ViewBag.ShowAll = true;
                 }
-            }           
+            }
+            else
+                ViewBag.ShowAll = false;           
 
             return View(payments.ToList());
         }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DFUNK.Models;
+using PagedList;
 
 namespace DFUNK.Controllers
 {
@@ -16,21 +17,59 @@ namespace DFUNK.Controllers
         
 
         // GET: Contacts
-        public ActionResult Index()
-        {
-            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
-            return View(contact.ToList());
-        }
-
-        //[HttpPost]
-        //public ActionResult Index(bool Companies, bool Members, bool Stakeholders, bool Volunteers, bool InternalEmployees)
+        //public ActionResult Index()
         //{
-        //    db = new Models.DFUNK();
-        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == Companies && x.member == Members && x.stakeholder == Stakeholders
-        //    && x.volunteer == Volunteers && x.internalEmployee == InternalEmployees);
-
+        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
         //    return View(contact.ToList());
         //}
+
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.LastNameSortParm = sortOrder == "surName" ? "surName_desc" : "surName";
+            //var contacts = from c in db.Contact
+            //               select c;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var contacts = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                contacts = contacts.Where(s => s.name.Contains(searchString)
+                                       || s.surname.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    contacts = contacts.OrderByDescending(s => s.name);
+                    break;
+                case "surName":
+                    contacts = contacts.OrderBy(s => s.surname);
+                    break;
+                case "surName_desc":
+                    contacts = contacts.OrderByDescending(s => s.surname);
+                    break;
+                default:
+                    contacts = contacts.OrderBy(s => s.name);
+                    break;
+            }
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            return View(contacts.ToPagedList(pageNumber, pageSize));
+        }
 
         [HttpPost]
         public ActionResult RemoveFromGroup(int Group1, int contact_id)
@@ -67,18 +106,18 @@ namespace DFUNK.Controllers
             return RedirectToAction("Details", new { id = contact_id });
         }
 
-        [HttpPost]
-        public ActionResult Index(int MembersOrCompanies)
-        {
-            db = new Models.DFUNK();
+        //[HttpPost]
+        //public ActionResult Index(int MembersOrCompanies)
+        //{
+        //    db = new Models.DFUNK();
 
-            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
+        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
 
-            if (MembersOrCompanies == 2)
-                contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == true);
+        //    if (MembersOrCompanies == 2)
+        //        contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == true);
 
-            return View(contact.ToList());
-        }
+        //    return View(contact.ToList());
+        //}
 
         // GET: Contacts/Details/5
         public ActionResult Details(int? id)
