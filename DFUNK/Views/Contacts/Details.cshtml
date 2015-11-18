@@ -20,8 +20,29 @@
                 <dd>
                     @Html.DisplayFor(model => model.CompanyInfo.contactPerson)
                 </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyInfo.role)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyInfo.role)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyInfo.email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyInfo.email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyInfo.phone)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyInfo.phone)
+                </dd>
             }
-            else if(Model.volunteer)
+            else if (Model.volunteer)
             {
                 <dt>
                     @Html.DisplayNameFor(model => model.VolunteerInfo.tshirtSize)

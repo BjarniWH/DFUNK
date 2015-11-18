@@ -91,6 +91,42 @@
             </div>
         </div>
 
+        <div id="companyInfo_div">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.contactPerson, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.CompanyInfo.contactPerson, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyInfo.contactPerson, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.role, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CompanyInfo.role, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompanyInfo.role, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CompanyInfo.email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompanyInfo.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CompanyInfo.phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompanyInfo.phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
         @*<div class="form-group">
             @Html.LabelFor(model => model.registerDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -191,6 +227,10 @@
     $(document).ready(function () {
         $("#volunteer").click(function () {
             $("#volunteerInfo_div").toggle(this.checked);
+        }).triggerHandler('click');
+
+        $("#company").click(function () {
+            $("#companyInfo_div").toggle(this.checked);
         }).triggerHandler('click');
     });
 </script>

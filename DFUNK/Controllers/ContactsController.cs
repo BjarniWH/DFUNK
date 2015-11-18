@@ -92,11 +92,12 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,member,stakeholder,volunteer,internalEmployee")] Contact contact, [Bind(Include = "tshirtSize,vegetarian,drivingLicense")] VolunteerInfo volunteerInfo)
+        public ActionResult Create([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,member,stakeholder,volunteer,internalEmployee")] Contact contact, [Bind(Include = "tshirtSize,vegetarian,drivingLicense")] VolunteerInfo volunteerInfo, [Bind(Include = "contactPerson,role,email,phone")] CompanyInfo companyInfo)
         {
             if (ModelState.IsValid)
             {
                 contact.VolunteerInfo = volunteerInfo;
+                contact.CompanyInfo = companyInfo;
                 contact.registerDate = DateTime.Now;
                 db.Contact.Add(contact);
                 db.SaveChanges();
@@ -130,14 +131,23 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,registerDate,member,stakeholder,volunteer,internalEmployee")] Contact contact, [Bind(Include = "tshirtSize,vegetarian,drivingLicense")] VolunteerInfo volunteerInfo)
+        public ActionResult Edit([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,registerDate,member,stakeholder,volunteer,internalEmployee")] Contact contact, [Bind(Include = "tshirtSize,vegetarian,drivingLicense")] VolunteerInfo volunteerInfo, [Bind(Include = "contactPerson,role,email,phone")] CompanyInfo companyInfo)
         {
             if (ModelState.IsValid)
             {
-                volunteerInfo.contact_id = contact.contact_id;
+                if (contact.volunteer)
+                {
+                    volunteerInfo.contact_id = contact.contact_id;
+                    db.Entry(volunteerInfo).State = EntityState.Modified;
+                }
+                if (contact.company)
+                {
+                    companyInfo.contact_id = contact.contact_id;
+                    db.Entry(companyInfo).State = EntityState.Modified;
+                }              
+                
                 //contact.VolunteerInfo = volunteerInfo;
                 db.Entry(contact).State = EntityState.Modified;
-                db.Entry(volunteerInfo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
