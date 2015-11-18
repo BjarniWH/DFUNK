@@ -179,6 +179,14 @@
         <dd>
             @Html.DisplayFor(model => model.internalEmployee)
         </dd>
+
+        <dt>
+            @Html.DisplayName("Payments")
+        </dt>
+
+        <dd>
+            @Html.ActionLink("See Payments", "Index", "Payments", new { contact_id = Model.contact_id }, null)
+        </dd>
         </dl>
 
         <h2>Groups</h2>

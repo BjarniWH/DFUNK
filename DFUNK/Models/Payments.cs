@@ -30,5 +30,6 @@ namespace DFUNK.Models
         public virtual PaymentMethod PaymentMethod { get; set; }
 
         public virtual Projects Projects { get; set; }
+        
     }
 }
