@@ -194,12 +194,18 @@ namespace DFUNK.Controllers
                 if (contact.volunteer)
                 {
                     volunteerInfo.contact_id = contact.contact_id;
-                    db.Entry(volunteerInfo).State = EntityState.Modified;
+                    if (db.VolunteerInfo.Find(contact.contact_id) != null)
+                        db.Entry(volunteerInfo).State = EntityState.Modified;
+                    else
+                        db.VolunteerInfo.Add(volunteerInfo);
                 }
                 if (contact.company)
                 {
                     companyInfo.contact_id = contact.contact_id;
-                    db.Entry(companyInfo).State = EntityState.Modified;
+                    if (db.CompanyInfo.Find(contact.contact_id) != null)
+                        db.Entry(companyInfo).State = EntityState.Modified;
+                    else
+                        db.CompanyInfo.Add(companyInfo);                    
                 }              
                 
                 //contact.VolunteerInfo = volunteerInfo;
@@ -234,6 +240,10 @@ namespace DFUNK.Controllers
         {
             Contact contact = db.Contact.Find(id);
             db.Contact.Remove(contact);
+            if (db.VolunteerInfo.Find(id) != null)
+                db.VolunteerInfo.Remove(db.VolunteerInfo.Find(id));
+            if (db.CompanyInfo.Find(id) != null)
+                db.CompanyInfo.Remove(db.CompanyInfo.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
         }
