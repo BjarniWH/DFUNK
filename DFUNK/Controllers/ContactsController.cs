@@ -66,7 +66,7 @@ namespace DFUNK.Controllers
                     break;
             }
 
-            int pageSize = 15;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(contacts.ToPagedList(pageNumber, pageSize));
         }
