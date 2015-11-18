@@ -42,9 +42,26 @@ namespace DFUNK.Controllers
         }
 
         [HttpPost]
+        public ActionResult RemoveFromEvent(int Events1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Events1.Remove(db.Events.Find(Events1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        [HttpPost]
         public ActionResult AddToGroup(int Group1, int contact_id)
         {
             db.Contact.Find(contact_id).Group1.Add(db.Group.Find(Group1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        public ActionResult AddToEvent(int Events1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Events1.Add(db.Events.Find(Events1));
             db.SaveChanges();
 
             return RedirectToAction("Details", new { id = contact_id });

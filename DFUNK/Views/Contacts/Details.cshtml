@@ -227,10 +227,41 @@
                     <input type="submit" class="btn btn-default" value="Add" />
                 }
             </dd>
-
-
-
         </dl>
+
+    <h2>Events</h2>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Remove from Event")
+        </dt>
+        <dd>
+            @using (Html.BeginForm("RemoveFromEvent", "Contacts", FormMethod.Post))
+            {
+                @Html.DropDownListFor(model => model.Events1, new SelectList(Model.Events1.ToList(), "event_id", "name"))
+                @Html.HiddenFor(model => model.contact_id, new { id = Model.contact_id })
+
+                <input type="submit" class="btn btn-default" value="Remove" />
+            }
+        </dd>
+        <dt>
+            @Html.DisplayName("Add to Event")
+        </dt>
+        <dd>
+            @using (Html.BeginForm("AddToEvent", "Contacts", FormMethod.Post))
+            {
+                DFUNK.Models.DFUNK db = new DFUNK.Models.DFUNK();
+                @Html.DropDownListFor(model => model.Events1, new SelectList(db.Events.ToList().Where(p => !Model.Events1.ToList().Any(p2 => p2.event_id == p.event_id)), "event_id", "name"))
+                //@Html.DropDownListFor(model => model.Group1, new SelectList(Model.Group1.ToList(), "group_id", "fullName"))
+                @Html.HiddenFor(model => model.contact_id, new { id = Model.contact_id })
+
+                <input type="submit" class="btn btn-default" value="Add" />
+            }
+        </dd>
+
+
+
+    </dl>
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.contact_id }) |
