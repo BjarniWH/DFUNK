@@ -50,7 +50,11 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.project_id }) |
             @Html.ActionLink("Details", "Details", new { id=item.project_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.project_id })
+            @if (item.Payments.ToList().Count < 1)
+            {
+              @Html.ActionLink("Delete", "Delete", new { id = item.project_id })
+            }
+            
         </td>
     </tr>
 }
