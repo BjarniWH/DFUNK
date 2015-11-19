@@ -46,8 +46,22 @@ namespace DFUNK.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                contacts = contacts.Where(s => s.name.Contains(searchString)
-                                       || s.surname.Contains(searchString));
+                //var searchStrings = searchString.Split(' ');
+
+                //var searchcontacts = contacts.Where(c => c.email.Equals("Nothing"));
+
+                //foreach(string word in searchStrings)
+                //{
+                //    searchcontacts = searchcontacts.Concat(contacts.Where(s => s.name.Contains(searchString)
+                //                       || s.surname.Contains(searchString)));
+                //}
+
+                //contacts = searchcontacts;
+
+                contacts = contacts.Where(c => (c.name.ToString().TrimEnd() + " " + c.surname.ToString().TrimEnd()).Contains(searchString));
+
+                //contacts = contacts.Where(s => s.name.Contains(searchString)
+                //                       || s.surname.Contains(searchString));
             }
 
             switch (sortOrder)
