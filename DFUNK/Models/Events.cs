@@ -13,6 +13,7 @@ namespace DFUNK.Models
         {
             Contact1 = new HashSet<Contact>();
             Projects = new HashSet<Projects>();
+            //AllProjects = new HashSet<Projects>();
         }
 
         [Key]
@@ -33,10 +34,8 @@ namespace DFUNK.Models
         [Column(TypeName = "date")]
         public DateTime? startDate { get; set; }
 
-        [StringLength(10)]
-        public string endDate { get; set; }
-
-        public TimeSpan? startTime { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? endDate { get; set; }
 
         public virtual Contact Contact { get; set; }
 
@@ -45,5 +44,8 @@ namespace DFUNK.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projects> Projects { get; set; }
+
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Projects> AllProjects { get; set; }
     }
 }

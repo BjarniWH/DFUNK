@@ -7,42 +7,117 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DFUNK.Models;
+using PagedList;
 
 namespace DFUNK.Controllers
 {
     public class ContactsController : Controller
     {
         private Models.DFUNK db = new Models.DFUNK();
+        
 
         // GET: Contacts
-        public ActionResult Index()
-        {
-            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
-            return View(contact.ToList());
-        }
-
-        //[HttpPost]
-        //public ActionResult Index(bool Companies, bool Members, bool Stakeholders, bool Volunteers, bool InternalEmployees)
+        //public ActionResult Index()
         //{
-        //    db = new Models.DFUNK();
-        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == Companies && x.member == Members && x.stakeholder == Stakeholders
-        //    && x.volunteer == Volunteers && x.internalEmployee == InternalEmployees);
-            
+        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
         //    return View(contact.ToList());
         //}
 
-        [HttpPost]
-        public ActionResult Index(int MembersOrCompanies)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            db = new Models.DFUNK();
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.LastNameSortParm = sortOrder == "surName" ? "surName_desc" : "surName";
+            //var contacts = from c in db.Contact
+            //               select c;
 
-            var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            if (MembersOrCompanies == 2)
-                contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == true);
+            ViewBag.CurrentFilter = searchString;
 
-            return View(contact.ToList());
+            var contacts = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                contacts = contacts.Where(s => s.name.Contains(searchString)
+                                       || s.surname.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    contacts = contacts.OrderByDescending(s => s.name);
+                    break;
+                case "surName":
+                    contacts = contacts.OrderBy(s => s.surname);
+                    break;
+                case "surName_desc":
+                    contacts = contacts.OrderByDescending(s => s.surname);
+                    break;
+                default:
+                    contacts = contacts.OrderBy(s => s.name);
+                    break;
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(contacts.ToPagedList(pageNumber, pageSize));
         }
+
+        [HttpPost]
+        public ActionResult RemoveFromGroup(int Group1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Group1.Remove(db.Group.Find(Group1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        [HttpPost]
+        public ActionResult RemoveFromEvent(int Events1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Events1.Remove(db.Events.Find(Events1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        [HttpPost]
+        public ActionResult AddToGroup(int Group1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Group1.Add(db.Group.Find(Group1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        public ActionResult AddToEvent(int Events1, int contact_id)
+        {
+            db.Contact.Find(contact_id).Events1.Add(db.Events.Find(Events1));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = contact_id });
+        }
+
+        //[HttpPost]
+        //public ActionResult Index(int MembersOrCompanies)
+        //{
+        //    db = new Models.DFUNK();
+
+        //    var contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == false);
+
+        //    if (MembersOrCompanies == 2)
+        //        contact = db.Contact.Include(c => c.CompanyInfo).Include(c => c.VolunteerInfo).Where(x => x.company == true);
+
+        //    return View(contact.ToList());
+        //}
 
         // GET: Contacts/Details/5
         public ActionResult Details(int? id)
@@ -56,6 +131,7 @@ namespace DFUNK.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(contact);
         }
 
@@ -72,10 +148,13 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,registerDate,member,stakeholder,volunteer,internalEmployee")] Contact contact)
+        public ActionResult Create([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,member,stakeholder,volunteer,internalEmployee")] Contact contact, [Bind(Include = "tshirtSize,vegetarian,drivingLicense")] VolunteerInfo volunteerInfo, [Bind(Include = "contactPerson,role,email,phone")] CompanyInfo companyInfo)
         {
             if (ModelState.IsValid)
             {
+                contact.VolunteerInfo = volunteerInfo;
+                contact.CompanyInfo = companyInfo;
+                contact.registerDate = DateTime.Now;
                 db.Contact.Add(contact);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -108,10 +187,28 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,registerDate,member,stakeholder,volunteer,internalEmployee")] Contact contact)
+        public ActionResult Edit([Bind(Include = "contact_id,name,surname,dateOfBirth,street,zipCode,city,phoneNr,email,company,registerDate,member,stakeholder,volunteer,internalEmployee")] Contact contact, [Bind(Include = "tshirtSize,vegetarian,drivingLicense")] VolunteerInfo volunteerInfo, [Bind(Include = "contactPerson,role,email,phone")] CompanyInfo companyInfo)
         {
             if (ModelState.IsValid)
             {
+                if (contact.volunteer)
+                {
+                    volunteerInfo.contact_id = contact.contact_id;
+                    if (db.VolunteerInfo.Find(contact.contact_id) != null)
+                        db.Entry(volunteerInfo).State = EntityState.Modified;
+                    else
+                        db.VolunteerInfo.Add(volunteerInfo);
+                }
+                if (contact.company)
+                {
+                    companyInfo.contact_id = contact.contact_id;
+                    if (db.CompanyInfo.Find(contact.contact_id) != null)
+                        db.Entry(companyInfo).State = EntityState.Modified;
+                    else
+                        db.CompanyInfo.Add(companyInfo);                    
+                }              
+                
+                //contact.VolunteerInfo = volunteerInfo;
                 db.Entry(contact).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -143,6 +240,10 @@ namespace DFUNK.Controllers
         {
             Contact contact = db.Contact.Find(id);
             db.Contact.Remove(contact);
+            if (db.VolunteerInfo.Find(id) != null)
+                db.VolunteerInfo.Remove(db.VolunteerInfo.Find(id));
+            if (db.CompanyInfo.Find(id) != null)
+                db.CompanyInfo.Remove(db.CompanyInfo.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
         }

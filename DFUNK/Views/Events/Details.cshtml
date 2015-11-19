@@ -65,14 +65,52 @@
         <dd>
             @Html.DisplayFor(model => model.endDate)
         </dd>
-
         <dt>
+            @Html.DisplayNameFor(model => model.Projects)
+        </dt>
+        <dd>
+            @using (Html.BeginForm("RemoveProject", "Events", FormMethod.Post))
+            {
+                @*@Html.DisplayName("Companies:")
+                @Html.DropDownList("MembersOrCompanies", new SelectList(
+        new List<Object>{
+                       new { value = 1 , text = "Members"  },
+                       new { value = 2 , text = "Companies" }
+        },
+        "value",
+        "text",
+        0))*@
+                @Html.DropDownListFor(model => model.Projects, new SelectList(Model.Projects.ToList(), "project_id", "name"))
+                @Html.HiddenFor(model => model.event_id, new { id = Model.event_id })
+
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Remove" />
+                </div>
+            }            
+        </dd>
+        <dt>
+            @Html.DisplayName("Add Project")
+        </dt>
+        <dd>
+            @using (Html.BeginForm("AddProject", "Events", FormMethod.Post))
+            {
+                
+                DFUNK.Models.DFUNK db = new DFUNK.Models.DFUNK();
+                @Html.DropDownListFor(model => model.Projects, new SelectList(db.Projects.ToList().Where(p => !Model.Projects.ToList().Any(p2 => p2.project_id == p.project_id)), "project_id", "name"))
+                @Html.HiddenFor(model => model.event_id, new { id = Model.event_id })
+
+                <div class="col-md-offset-2 col-md-10">
+                    <input type = "submit" class="btn btn-default" value="Add" />
+                </div>
+            }
+        </dd>
+        @*<dt>
             @Html.DisplayNameFor(model => model.startTime)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.startTime)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>

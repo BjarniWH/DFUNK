@@ -36,6 +36,24 @@ namespace DFUNK.Controllers
             return View(projects);
         }
 
+        [HttpPost]
+        public ActionResult RemoveGroup(int Group, int project_id)
+        {
+            db.Projects.Find(project_id).Group.Remove(db.Group.Find(Group));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = project_id });
+        }
+
+        [HttpPost]
+        public ActionResult AddGroup(int Group, int project_id)
+        {
+            db.Projects.Find(project_id).Group.Add(db.Group.Find(Group));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = project_id });
+        }
+
         // GET: Projects/Create
         public ActionResult Create()
         {

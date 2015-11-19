@@ -33,7 +33,28 @@ namespace DFUNK.Controllers
             {
                 return HttpNotFound();
             }
+
+            //db.Projects.ToList();
+
             return View(events);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveProject(int Projects, int event_id)
+        {
+            db.Events.Find(event_id).Projects.Remove(db.Projects.Find(Projects));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = event_id });
+        }
+
+        [HttpPost]
+        public ActionResult AddProject(int Projects, int event_id)
+        {
+            db.Events.Find(event_id).Projects.Add(db.Projects.Find(Projects));
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = event_id });
         }
 
         // GET: Events/Create
@@ -48,7 +69,7 @@ namespace DFUNK.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "event_id,name,minPeople,maxPeople,address,leader,startDate,endDate,startTime")] Events events)
+        public ActionResult Create([Bind(Include = "event_id,name,minPeople,maxPeople,address,leader,startDate,endDate")] Events events)
         {
             if (ModelState.IsValid)
             {

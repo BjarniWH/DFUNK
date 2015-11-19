@@ -24,13 +24,15 @@ namespace DFUNK.Models
         public int contact_id { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(50)]
         public string name { get; set; }
 
-        [StringLength(10)]
+        [StringLength(50)]
         public string surname { get; set; }
 
         [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? dateOfBirth { get; set; }
 
         [Required]

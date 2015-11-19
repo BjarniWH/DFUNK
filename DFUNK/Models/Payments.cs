@@ -9,7 +9,7 @@ namespace DFUNK.Models
     public partial class Payments
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int payment_id { get; set; }
 
         [Column(TypeName = "date")]
@@ -30,5 +30,6 @@ namespace DFUNK.Models
         public virtual PaymentMethod PaymentMethod { get; set; }
 
         public virtual Projects Projects { get; set; }
+        
     }
 }

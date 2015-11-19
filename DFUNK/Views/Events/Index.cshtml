@@ -34,7 +34,7 @@
             @Html.DisplayNameFor(model => model.endDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.startTime)
+            @*@Html.DisplayNameFor(model => model.startTime)*@
         </th>
         <th></th>
     </tr>
@@ -63,9 +63,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.endDate)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.startTime)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.event_id }) |
             @Html.ActionLink("Details", "Details", new { id=item.event_id }) |

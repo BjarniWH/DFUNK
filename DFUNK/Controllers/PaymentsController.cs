@@ -15,17 +15,38 @@ namespace DFUNK.Controllers
         private Models.DFUNK db = new Models.DFUNK();
 
         // GET: Payments
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var payments = db.Payments.Include(p => p.Contact).Include(p => p.PaymentMethod).Include(p => p.Projects);
+        //    var result = payments.ToList();
+        //    decimal total = 0;
+        //    foreach(Payments payment in result)
+        //    {
+        //        total = total + (decimal)payment.amount;
+        //    }
+
+        //    return View(result);
+        //}
+
+        public ActionResult Index(int? contact_id)
         {
             var payments = db.Payments.Include(p => p.Contact).Include(p => p.PaymentMethod).Include(p => p.Projects);
-            var result = payments.ToList();
-            decimal total = 0;
-            foreach(Payments payment in result)
-            {
-                total = total + (decimal)payment.amount;
-            }
 
-            return View(result);
+            if (contact_id != null)
+            {
+                payments = payments.Where(x => x.contact_id == contact_id);
+                decimal total = 0;
+                foreach (Payments payment in payments)
+                {
+                    total = total + (decimal)payment.amount;
+                    ViewBag.TotalAmount = "Total amount paid: " + total.ToString("F");
+                    ViewBag.ShowAll = true;
+                }
+            }
+            else
+                ViewBag.ShowAll = false;           
+
+            return View(payments.ToList());
         }
 
         // GET: Payments/Details/5
@@ -42,6 +63,19 @@ namespace DFUNK.Controllers
             }
             return View(payments);
         }
+
+        //public ActionResult ShowOneContact(int contact_id)
+        //{
+        //    var payments = db.Payments.Include(p => p.Contact).Include(p => p.PaymentMethod).Include(p => p.Projects).Where(x => x.contact_id == contact_id);
+        //    var result = payments.ToList();
+        //    decimal total = 0;
+        //    foreach (Payments payment in result)
+        //    {
+        //        total = total + (decimal)payment.amount;
+        //    }
+
+        //    return RedirectToAction("Index", new { id = contact_id });
+        //}
 
         // GET: Payments/Create
         public ActionResult Create()
@@ -61,6 +95,7 @@ namespace DFUNK.Controllers
         {
             if (ModelState.IsValid)
             {
+                payments.date = DateTime.Now;
                 db.Payments.Add(payments);
                 db.SaveChanges();
                 return RedirectToAction("Index");
